@@ -5,14 +5,14 @@ import java.awt.Rectangle;
 public class Ball extends GameObject implements Interface
 {
 	private int speed;
-	private int vx, vy;
+	private double vx, vy;
 	public Ball(int gWidth, int gHeight) 
 	{
 		super(gWidth, gHeight);
 		c = Color.yellow;
 		x = 630;
 		y = 360;
-		speed = 10;
+		speed = 5;
 	}
 
 	@Override
@@ -30,11 +30,12 @@ public class Ball extends GameObject implements Interface
 		}
 	}
 	
-	public void ballGone()
+	public void reset()
 	{
 		vx = 0;
 		vy = 0;
-		c = Color.black;
+		x = 630;
+		y = 360;
 	}
 	
 	
@@ -49,27 +50,22 @@ public class Ball extends GameObject implements Interface
 	
 	public void fire(double angle) 
 	{
-		vx = (int)(Math.cos(angle) * speed);
-		vy = -(int)(Math.sin(angle) * speed);
+		vx = (int)(Math.cos(angle + 30) * speed);
+		vy = -(int)(Math.sin(angle + 30) * speed);
 	}
 	
 	public void bounce()
 	{
-		vx = -vx;
-	}
-	
-	public int getVX()
-	{
-		return vx;
-	}
-	
-	public void setVX(int vx)
-	{
-		this.vx = vx;
+			vx = -1.25 * vx;
 	}
 	
 	public int getX()
 	{
 		return x;
+	}
+	
+	public void setX(int x)
+	{
+		this.x = x;
 	}
 }

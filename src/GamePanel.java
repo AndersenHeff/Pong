@@ -24,7 +24,6 @@ public class GamePanel extends JPanel implements Runnable
 	private boolean start;
 	public GamePanel(int gWidth, int gHeight)
 	{
-		
 		paddle = new Paddle(15, 0, gWidth, gHeight);
 		paddle2 = new Paddle(gWidth - 30, 0, gWidth, gHeight);
 		ball = new Ball(gWidth, gHeight);
@@ -52,10 +51,13 @@ public class GamePanel extends JPanel implements Runnable
 	  
 	  //start game
 	  registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0, false), "fire", fire);
+	  
+	  
 	  while(true)
   	{
   		try {
-  			Thread.sleep(20);
+  			//FPS
+  			Thread.sleep(15);
   		} catch (InterruptedException e) { 
   			System.out.println("Thread stopped");
   			e.printStackTrace();
@@ -109,19 +111,28 @@ public class GamePanel extends JPanel implements Runnable
 	
 	
 	
-	
+	//Ball Fire Angle
 	private Action fire = new AbstractAction("fire") 
 	{
 		@Override
 		public void actionPerformed(ActionEvent ae) 
 		{
+			//Makes Ball Fire Only If Game Isn't Playing
 			if(start)
 			{
 				ball.fire(Math.random() * Math.PI / 2 + Math.PI / 4);
 				start = false;
+				
+				//Makes Score Reset On Win
+				if(score.getScore() == 3)
+				{
+					score.setScore(0);
+				}
+				if(score2.getScore() == 3)
+				{
+					score2.setScore(0);
+				}
 			}
-			//random angle between 45 & 135 degrees
-			
 		}
 	};
 	
@@ -142,47 +153,77 @@ public class GamePanel extends JPanel implements Runnable
 		//Start Message
 		
 		super.paintComponent(g);
-		if(start)
+		
+		//Start Message
+		if(start && (score.getScore() % 3 != 0 || score.getScore() == 0))
 		{
 			g.setColor(Color.green);
 			g.setFont(new Font("serif", Font.BOLD, 30));
-			g.drawString("Press Space to Begin", 495, 300);
+			g.drawString("Press Space to Begin", 510, 300);
 		}
+		
+		//Draws All Objects
 		paddle.draw(g);
 		paddle2.draw(g);
 		ball.draw(g);
 		score.draw(g);
 		score2.draw(g);
+		//Draws Ball Bounce
 		bounce();
 		
+		//Left Paddle Win Message
+		if(score.getScore() % 3 == 0 && score.getScore() != 0 && start)
+		{
+			g.setColor(Color.green);
+			g.setFont(new Font("serif", Font.BOLD, 30));
+			g.drawString("Left Paddle Wins!", 510, 300);
+			
+			g.setColor(Color.red);
+			g.setFont(new Font("serif", Font.BOLD, 30));
+			g.drawString("Press Space to Keep Playing", 450, 500);
+		}
 		
+		//Right Paddle Win Message
+		if(score2.getScore() == 3 && score.getScore() != 0 && start)
+		{
+			g.setColor(Color.green);
+			g.setFont(new Font("serif", Font.BOLD, 30));
+			g.drawString("Right Paddle Wins!", 510, 300);
+			
+			g.setColor(Color.red);
+			g.setFont(new Font("serif", Font.BOLD, 30));
+			g.drawString("Press Space to Keep Playing", 450, 500);
+		}
+		
+		//Rests Ball After Win And Grants A Score
 		if(ball.getX() < 0)
 		{
-			ball.ballGone();
-			g.setColor(Color.red);
-			g.setFont(new Font("serif", Font.BOLD, 30));
-			g.drawString("Right Paddle Wins!", 800, 300);
+			score2.setScore(score2.getScore() + 1);
+			start = true;
+			ball.reset();
 		}
-		if(ball.getX() > 1240)
+		if(ball.getX() > 1260)
 		{
-			ball.ballGone();
-			g.setColor(Color.red);
-			g.setFont(new Font("serif", Font.BOLD, 30));
-			g.drawString("Left Paddle Wins!", 190, 300);
+			score.setScore(score.getScore() + 1);
+			start = true;
+			ball.reset();
 		}
 		
 	}
 
-	//make it so that if ball goes off the screen the game stops
 	public void bounce()
 	{
-		if(ball.getX() >= paddle2.getX() - 15 && (ball.getY() > paddle2.getY() && ball.getY() < paddle2.getY() + 100)) 
+		//Bounces Ball on Right Paddle
+		if(ball.getX() >= paddle2.getX() - 20 && (ball.getY() > paddle2.getY() && ball.getY() < paddle2.getY() + 100)) 
 		{
+			ball.setX(paddle2.getX() - 20);
 			ball.bounce();
 		}
+		//Makes Ball Bounce on Left Paddle
 		if(ball.getX() <= paddle.getX() && (ball.getY() > paddle.getY() && ball.getY() < paddle.getY() + 100)) 
 		{
-			ball.bounce();
+			ball.setX(paddle.getX() + 10);
+			ball.bounce();	
 		}
 	}
 

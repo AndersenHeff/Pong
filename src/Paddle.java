@@ -64,4 +64,8 @@ public class Paddle extends GameObject implements Interface
 	{
 		return y;
 	}
+	public int getX()
+	{
+		return x;
+	}
 }
