@@ -1,7 +1,7 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-
+//Updated
 public class Score extends GameObject implements Interface
 {
 	private int score;

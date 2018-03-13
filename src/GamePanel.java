@@ -11,7 +11,7 @@ import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
-
+//Updated
 public class GamePanel extends JPanel implements Runnable
 {
 	private static final long serialVersionUID = -7302468257756861299L;
