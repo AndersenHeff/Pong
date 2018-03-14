@@ -1,6 +1,6 @@
 
 import javax.swing.JFrame;
-//Update
+//Updated
 public class GameRunner 
 {
 	public static void main(String[] args)

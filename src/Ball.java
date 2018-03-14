@@ -2,7 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-//Update
+//Updated
 public class Ball extends GameObject implements Interface
 {
 	private int speed;

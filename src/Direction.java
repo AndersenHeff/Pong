@@ -1,4 +1,4 @@
-//Update
+//Updated
 public enum Direction 
 {
 	UP, DOWN, None;
