@@ -11,7 +11,7 @@ import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
-//Updated
+//Update
 public class GamePanel extends JPanel implements Runnable
 {
 	private static final long serialVersionUID = -7302468257756861299L;
@@ -21,11 +21,13 @@ public class GamePanel extends JPanel implements Runnable
 	private Ball ball;
 	private Score score;
 	private Score score2;
+	private Powerup powerup;
 	private boolean start;
 	public GamePanel(int gWidth, int gHeight)
 	{
-		paddle = new Paddle(15, 0, gWidth, gHeight);
-		paddle2 = new Paddle(gWidth - 30, 0, gWidth, gHeight);
+		powerup = new Powerup(gWidth, gHeight);
+		paddle = new Paddle(15, 310, gWidth, gHeight);
+		paddle2 = new Paddle(gWidth - 30, 310, gWidth, gHeight);
 		ball = new Ball(gWidth, gHeight);
 		score = new Score(50 , 30, gWidth, gHeight);
 		score2 = new Score(1125 , 30, gWidth, gHeight);
@@ -127,16 +129,16 @@ public class GamePanel extends JPanel implements Runnable
 				if(score.getScore() == 3)
 				{
 					score.setScore(0);
+					score2.setScore(0);
 				}
 				if(score2.getScore() == 3)
 				{
 					score2.setScore(0);
+					score.setScore(0);
 				}
 			}
 		}
 	};
-	
-	
 	
 	
 	
@@ -168,6 +170,12 @@ public class GamePanel extends JPanel implements Runnable
 		ball.draw(g);
 		score.draw(g);
 		score2.draw(g);
+		
+		
+		//Make a method that calls this at a certain time
+		//powerup.draw(g);
+		
+		
 		//Draws Ball Bounce
 		bounce();
 		

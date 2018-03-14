@@ -2,7 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-//Updated
+//Update
 public class Ball extends GameObject implements Interface
 {
 	private int speed;
@@ -56,8 +56,15 @@ public class Ball extends GameObject implements Interface
 	}
 	
 	public void bounce()
-	{
-		vx = -1.25 * vx;
+	{	
+		if(vx >= 12 || vx <= -12)
+		{
+			vx = -vx;
+		}
+		else
+		{
+			vx = -1.25 * vx;
+		}
 	}
 	
 	public int getX()
@@ -65,6 +72,21 @@ public class Ball extends GameObject implements Interface
 		return x;
 	}
 	
+	
+	public double getVX()
+	{
+		return vx;
+	}
+	
+	public double getVY()
+	{
+		return vy;
+	}
+	
+	public void setVX(double vx)
+	{
+		this.vx = vx;
+	}
 	public void setX(int x)
 	{
 		this.x = x;

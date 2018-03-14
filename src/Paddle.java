@@ -1,6 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
-//Updated
+//Update
 public class Paddle extends GameObject implements Interface
 {
 	private int speed;
@@ -49,6 +49,12 @@ public class Paddle extends GameObject implements Interface
 		g.fillRect(x, y, width, height);
 		move();
 	}
+	
+	
+	
+	
+	
+	
 	
 	public int getWidth()
 	{

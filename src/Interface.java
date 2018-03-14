@@ -1,5 +1,5 @@
 import java.awt.Graphics;
-//Updated
+//Update
 public interface Interface 
 {
 	public abstract void move();
