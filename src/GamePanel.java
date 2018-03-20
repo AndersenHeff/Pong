@@ -60,6 +60,7 @@ public class GamePanel extends JPanel implements Runnable
   		try {
   			//FPS
   			Thread.sleep(15);
+  			powerup.powerUpTimer();
   		} catch (InterruptedException e) { 
   			System.out.println("Thread stopped");
   			e.printStackTrace();
@@ -152,6 +153,8 @@ public class GamePanel extends JPanel implements Runnable
        
 	public void paintComponent(Graphics g)
 	{
+		
+		int random = (int) (Math.random() * 3);
 		//Start Message
 		
 		super.paintComponent(g);
@@ -173,7 +176,41 @@ public class GamePanel extends JPanel implements Runnable
 		
 		
 		//Make a method that calls this at a certain time
-		//powerup.draw(g);
+		if(powerup.getCount() >= 200)
+		{
+			powerup.draw(g);
+		}
+		//powerup gets set 0 before it can ever spawn
+		
+		if(ball.getVX() > 0 && ball.getX() >= powerup.getX())
+		{
+			if(random == 0)
+			{
+			}
+			else if(random == 1)
+			{
+			}
+			else if(random == 2)
+			{
+			}
+			//if this set count is commented the code works and powerup is drawn but you cant hit powerup from the left
+			powerup.setCount(0);
+		}
+		
+		if(ball.getVX() < 0 && ball.getX() <= powerup.getX())
+		{
+			if(random == 0)
+			{
+			}
+			else if(random == 1)
+			{	
+			}
+			else if(random == 2)
+			{
+			}
+			powerup.setCount(0);
+		}
+		
 		
 		
 		//Draws Ball Bounce
@@ -231,7 +268,7 @@ public class GamePanel extends JPanel implements Runnable
 		if(ball.getX() <= paddle.getX() && (ball.getY() > paddle.getY() && ball.getY() < paddle.getY() + 100)) 
 		{
 			ball.setX(paddle.getX() + 10);
-			ball.bounce();	
+			ball.bounce();
 		}
 	}
 

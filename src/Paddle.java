@@ -54,7 +54,10 @@ public class Paddle extends GameObject implements Interface
 	
 	
 	
-	
+	public void setHeight(int height)
+	{
+		this.height = height;
+	}
 	
 	public int getWidth()
 	{
