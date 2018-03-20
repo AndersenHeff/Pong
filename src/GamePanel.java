@@ -131,11 +131,13 @@ public class GamePanel extends JPanel implements Runnable
 				{
 					score.setScore(0);
 					score2.setScore(0);
+					powerup.setCount(0);
 				}
 				if(score2.getScore() == 3)
 				{
 					score2.setScore(0);
 					score.setScore(0);
+					powerup.setCount(0);
 				}
 			}
 		}
@@ -165,6 +167,7 @@ public class GamePanel extends JPanel implements Runnable
 			g.setColor(Color.green);
 			g.setFont(new Font("serif", Font.BOLD, 30));
 			g.drawString("Press Space to Begin", 510, 300);
+			powerup.setCount(0);
 		}
 		
 		//Draws All Objects
@@ -176,13 +179,13 @@ public class GamePanel extends JPanel implements Runnable
 		
 		
 		//Make a method that calls this at a certain time
-		if(powerup.getCount() >= 200)
+		if(powerup.getCount() >= 1000)
 		{
 			powerup.draw(g);
 		}
-		//powerup gets set 0 before it can ever spawn
 		
-		if(ball.getVX() > 0 && ball.getX() >= powerup.getX())
+		//powerup flickers after a while of playing
+		if(ball.getVX() > 0 && ball.getX() >= powerup.getX() && ball.getX() <= powerup.getX() + 10 && powerup.getCount() >= 1000)
 		{
 			if(random == 0)
 			{
@@ -193,11 +196,10 @@ public class GamePanel extends JPanel implements Runnable
 			else if(random == 2)
 			{
 			}
-			//if this set count is commented the code works and powerup is drawn but you cant hit powerup from the left
 			powerup.setCount(0);
 		}
 		
-		if(ball.getVX() < 0 && ball.getX() <= powerup.getX())
+		if(ball.getVX() < 0 && ball.getX() <= powerup.getX() && ball.getX() >= powerup.getX() - 10 && powerup.getCount() >= 1000)
 		{
 			if(random == 0)
 			{
@@ -226,6 +228,7 @@ public class GamePanel extends JPanel implements Runnable
 			g.setColor(Color.red);
 			g.setFont(new Font("serif", Font.BOLD, 30));
 			g.drawString("Press Space to Keep Playing", 450, 500);
+			powerup.setCount(0);
 		}
 		
 		//Right Paddle Win Message
@@ -238,6 +241,7 @@ public class GamePanel extends JPanel implements Runnable
 			g.setColor(Color.red);
 			g.setFont(new Font("serif", Font.BOLD, 30));
 			g.drawString("Press Space to Keep Playing", 450, 500);
+			powerup.setCount(0);
 		}
 		
 		//Rests Ball After Win And Grants A Score

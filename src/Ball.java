@@ -51,7 +51,7 @@ public class Ball extends GameObject implements Interface
 	
 	public void fire(double angle) 
 	{
-		vx = -(int)(Math.cos(angle + 30) * speed);
+		vx = (int)(Math.cos(angle + 30) * speed);
 		vy = -(int)(Math.sin(angle + 30) * speed);
 	}
 	
