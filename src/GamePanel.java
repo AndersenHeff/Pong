@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -22,12 +23,14 @@ public class GamePanel extends JPanel implements Runnable
 	private Score score;
 	private Score score2;
 	private Powerup powerup;
+	private Barrier barrier;
 	private boolean start;
 	public GamePanel(int gWidth, int gHeight)
 	{
+		barrier = new Barrier(gWidth, gHeight);
 		powerup = new Powerup(gWidth, gHeight);
-		paddle = new Paddle(15, 310, gWidth, gHeight);
-		paddle2 = new Paddle(gWidth - 30, 310, gWidth, gHeight);
+		paddle = new Paddle(15, 310, Color.cyan, gWidth, gHeight);
+		paddle2 = new Paddle(gWidth - 30, 310, Color.red, gWidth, gHeight);
 		ball = new Ball(gWidth, gHeight);
 		score = new Score(50 , 30, gWidth, gHeight);
 		score2 = new Score(1125 , 30, gWidth, gHeight);
@@ -161,7 +164,7 @@ public class GamePanel extends JPanel implements Runnable
 		{
 			g.setColor(Color.green);
 			g.setFont(new Font("serif", Font.BOLD, 30));
-			g.drawString("Press Space to Begin", 510, 300);
+			g.drawString("Press Space to Begin", 450, 150);
 		}
 		
 		//Draws All Objects
@@ -170,7 +173,7 @@ public class GamePanel extends JPanel implements Runnable
 		ball.draw(g);
 		score.draw(g);
 		score2.draw(g);
-		
+		barrier.draw(g);
 		
 		//Make a method that calls this at a certain time
 		//powerup.draw(g);
@@ -216,6 +219,7 @@ public class GamePanel extends JPanel implements Runnable
 			start = true;
 			ball.reset();
 		}
+		Toolkit.getDefaultToolkit().sync();
 		
 	}
 
@@ -226,12 +230,14 @@ public class GamePanel extends JPanel implements Runnable
 		{
 			ball.setX(paddle2.getX() - 20);
 			ball.bounce();
+			ball.setC(Color.cyan);
 		}
 		//Makes Ball Bounce on Left Paddle
 		if(ball.getX() <= paddle.getX() && (ball.getY() > paddle.getY() && ball.getY() < paddle.getY() + 100)) 
 		{
 			ball.setX(paddle.getX() + 10);
 			ball.bounce();	
+			ball.setC(Color.red);
 		}
 	}
 

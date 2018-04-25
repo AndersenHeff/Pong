@@ -5,7 +5,7 @@ public class Paddle extends GameObject implements Interface
 {
 	private int speed;
 	private Direction dir;
-	public Paddle(int x, int y, int gWidth, int gHeight)
+	public Paddle(int x, int y, Color c, int gWidth, int gHeight)
 	{
 		super(gWidth, gHeight);
 		this.x = x;
@@ -13,7 +13,7 @@ public class Paddle extends GameObject implements Interface
 		this.y = y;
 		width = 10;
 		height = 100;
-		c = Color.cyan;
+		this.c = c;
 		dir = Direction.None;
 
 	}
@@ -49,7 +49,6 @@ public class Paddle extends GameObject implements Interface
 		g.fillRect(x, y, width, height);
 		move();
 	}
-	
 	
 	
 	

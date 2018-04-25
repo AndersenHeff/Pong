@@ -10,7 +10,7 @@ public class Ball extends GameObject implements Interface
 	public Ball(int gWidth, int gHeight) 
 	{
 		super(gWidth, gHeight);
-		c = Color.yellow;
+		c = Color.red;
 		x = 630;
 		y = 360;
 		speed = 5;
@@ -90,5 +90,9 @@ public class Ball extends GameObject implements Interface
 	public void setX(int x)
 	{
 		this.x = x;
+	}
+	public void setC(Color c)
+	{
+		this.c = c;
 	}
 }
