@@ -1,26 +1,22 @@
 import java.awt.Color;
 import java.awt.Graphics;
 //Update
-public class Powerup extends GameObject implements Interface
+public class Powerup extends GameObject
 {
 
 	public Powerup(int gWidth, int gHeight) 
 	{
 		super(gWidth, gHeight);
 		c = Color.magenta;
+		width = 20;
+		height = gHeight;
+		x = 620;
+		y = 0;
 	}
-
-	@Override
-	public void move() 
-	{
-		
-	}
-
-	@Override
 	public void draw(Graphics g) 
 	{
 		g.setColor(c);
-		g.fillRect(620, 0, 20, gHeight);
+		g.fillRect(x, y, width, height);
 	}
 	
 	

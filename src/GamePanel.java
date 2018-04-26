@@ -1,7 +1,6 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -154,9 +153,7 @@ public class GamePanel extends JPanel implements Runnable
       }
        
 	public void paintComponent(Graphics g)
-	{
-		//Start Message
-		
+	{	
 		super.paintComponent(g);
 		
 		//Start Message
@@ -173,6 +170,7 @@ public class GamePanel extends JPanel implements Runnable
 		ball.draw(g);
 		score.draw(g);
 		score2.draw(g);
+		//Write that barriers are only drawn if user hits y key.
 		barrier.draw(g);
 		
 		//Make a method that calls this at a certain time
@@ -206,7 +204,7 @@ public class GamePanel extends JPanel implements Runnable
 			g.drawString("Press Space to Keep Playing", 450, 500);
 		}
 		
-		//Rests Ball After Win And Grants A Score
+		//Resets Ball After Win And Grants A Score
 		if(ball.getX() < 0)
 		{
 			score2.setScore(score2.getScore() + 1);
@@ -225,20 +223,40 @@ public class GamePanel extends JPanel implements Runnable
 
 	public void bounce()
 	{
-		//Bounces Ball on Right Paddle
-		if(ball.getX() >= paddle2.getX() - 20 && (ball.getY() > paddle2.getY() && ball.getY() < paddle2.getY() + 100)) 
+		//Makes Ball Bounce on Right Paddle
+		if(ball.getX() >= paddle2.getX() - ball.getWidth() 
+		   && (ball.getY() > paddle2.getY() && ball.getY() < paddle2.getY() + paddle.getHeight())) 
 		{
-			ball.setX(paddle2.getX() - 20);
+			ball.setX(paddle2.getX() - ball.getWidth());
 			ball.bounce();
 			ball.setC(Color.cyan);
 		}
 		//Makes Ball Bounce on Left Paddle
-		if(ball.getX() <= paddle.getX() && (ball.getY() > paddle.getY() && ball.getY() < paddle.getY() + 100)) 
+		if(ball.getX() <= paddle.getX() && (ball.getY() > paddle.getY() 
+			&& ball.getY() < paddle.getY() + paddle.getHeight())) 
 		{
-			ball.setX(paddle.getX() + 10);
+			ball.setX(paddle.getX() + paddle.getWidth());
 			ball.bounce();	
 			ball.setC(Color.red);
 		}
+		
+		//Makes Ball Bounce on Left Side Barrier
+		if(ball.getX() >= barrier.getX() && ball.getX() <= barrier.getX() + ball.getWidth()
+		   && ball.getY() > barrier.getY() && ball.getY() < barrier.getY() + barrier.getHeight()
+		   && ball.getVX() > 0)
+		{
+			ball.setX(barrier.getX() - ball.getWidth());
+			ball.bounce();
+		}
+		
+		if(ball.getX() <= barrier.getX() && ball.getX() >= barrier.getX() - ball.getWidth()
+		   && ball.getY() > barrier.getY() && ball.getY() < barrier.getY() + barrier.getHeight()
+		   && ball.getVX() < 0)
+		{
+			ball.setX(barrier.getX() + ball.getWidth());
+			ball.bounce();
+		}
+		
 	}
 
 	

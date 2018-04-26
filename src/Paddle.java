@@ -29,9 +29,9 @@ public class Paddle extends GameObject implements Interface
 		{
 			y += speed;
 		}
-		if(y + height > 700)
+		if(y + height > gHeight - 20)
 		{
-			y = 600;
+			y = gHeight - height - 20;
 		}
 		else if(y < 0)
 		{
@@ -50,27 +50,4 @@ public class Paddle extends GameObject implements Interface
 		move();
 	}
 	
-	
-	
-	
-	
-	
-	public int getWidth()
-	{
-		return width;
-	}
-	
-	public int getHeight()
-	{
-		return height;
-	}
-	
-	public int getY()
-	{
-		return y;
-	}
-	public int getX()
-	{
-		return x;
-	}
 }

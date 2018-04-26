@@ -14,6 +14,8 @@ public class Ball extends GameObject implements Interface
 		x = 630;
 		y = 360;
 		speed = 5;
+		width = 20;
+		height = 20;
 	}
 
 	@Override
@@ -25,7 +27,7 @@ public class Ball extends GameObject implements Interface
 		{
 			vy = -vy;
 		}
-		if(y > 675)
+		if(y > gHeight - height - 25)
 		{
 			vy = -vy;
 		}
@@ -44,7 +46,7 @@ public class Ball extends GameObject implements Interface
 	public void draw(Graphics g) 
 	{
 		g.setColor(c);
-		g.fillOval(x, y, 20, 20);
+		g.fillOval(x, y, width, height);
 		move();
 	}
 	
@@ -67,11 +69,6 @@ public class Ball extends GameObject implements Interface
 		}
 	}
 	
-	public int getX()
-	{
-		return x;
-	}
-	
 	
 	public double getVX()
 	{
@@ -86,10 +83,6 @@ public class Ball extends GameObject implements Interface
 	public void setVX(double vx)
 	{
 		this.vx = vx;
-	}
-	public void setX(int x)
-	{
-		this.x = x;
 	}
 	public void setC(Color c)
 	{

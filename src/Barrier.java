@@ -7,10 +7,14 @@ public class Barrier extends GameObject
 	{
 		super(gWidth, gHeight);
 		c = Color.orange;
+		width = 20;
+		height = 300;
+		x = gWidth/2 - 20;
+		y = 200;
 	}
 	public void draw(Graphics g) 
 	{
 		g.setColor(c);
-		g.fillRect(gWidth/2 - 20, 200, 20, 300);
+		g.fillRect(x, y, width, height);
 	}
 }
