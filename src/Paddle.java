@@ -9,7 +9,7 @@ public class Paddle extends GameObject implements Interface
 	{
 		super(gWidth, gHeight);
 		this.x = x;
-		speed = 8;
+		speed = 6;
 		this.y = y;
 		width = 10;
 		height = 100;

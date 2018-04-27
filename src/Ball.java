@@ -59,7 +59,7 @@ public class Ball extends GameObject implements Interface
 	
 	public void bounce()
 	{	
-		if(vx >= 12 || vx <= -12)
+		if(vx >= 9 || vx <= -9)
 		{
 			vx = -vx;
 		}

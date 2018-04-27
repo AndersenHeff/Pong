@@ -7,7 +7,7 @@ public class Powerup extends GameObject
 	public Powerup(int gWidth, int gHeight) 
 	{
 		super(gWidth, gHeight);
-		c = Color.magenta;
+		c = Color.GREEN;
 		width = 20;
 		height = gHeight;
 		x = 620;

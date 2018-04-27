@@ -24,6 +24,7 @@ public class GamePanel extends JPanel implements Runnable
 	private Powerup powerup;
 	private Barrier barrier;
 	private boolean start;
+	private boolean barrierSpawn, powerupSpawn;
 	public GamePanel(int gWidth, int gHeight)
 	{
 		barrier = new Barrier(gWidth, gHeight);
@@ -35,6 +36,8 @@ public class GamePanel extends JPanel implements Runnable
 		score2 = new Score(1125 , 30, gWidth, gHeight);
 		setBackground(Color.black);
 		start = true;
+		barrierSpawn = false;
+		powerupSpawn = false;
 		thread = new Thread(this);
 		thread.start();
 	}
@@ -56,12 +59,15 @@ public class GamePanel extends JPanel implements Runnable
 	  //start game
 	  registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0, false), "fire", fire);
 	  
+	  //barrier and powerup
+	  registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_B, 0, false), "barrier", barrierS);
+	  registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_P, 0, false), "powerup", powerupS);
 	  
 	  while(true)
   	{
   		try {
   			//FPS
-  			Thread.sleep(15);
+  			Thread.sleep(10);
   			powerup.powerUpTimer();
   		} catch (InterruptedException e) { 
   			System.out.println("Thread stopped");
@@ -113,7 +119,19 @@ public class GamePanel extends JPanel implements Runnable
 			paddle2.setDir(Direction.None);
 		}
 	};
-	
+	//barrier and powerup
+	private Action barrierS = new AbstractAction("barrier") {
+		@Override
+		public void actionPerformed(ActionEvent ae) {
+			barrierSpawn = true;
+		}
+	};
+	private Action powerupS = new AbstractAction("powerup") {
+		@Override
+		public void actionPerformed(ActionEvent ae) {
+			powerupSpawn = true;
+		}
+	};
 	
 	
 	//Ball Fire Angle
@@ -160,11 +178,16 @@ public class GamePanel extends JPanel implements Runnable
 		super.paintComponent(g);
 		
 		//Start Message
-		if(start && (score.getScore() % 3 != 0 || score.getScore() == 0))
+		if(start && (score.getScore() % 3 != 0 || score.getScore() == 0) && !barrierSpawn && !powerupSpawn)
 		{
 			g.setColor(Color.green);
 			g.setFont(new Font("serif", Font.BOLD, 30));
 			g.drawString("Press Space to Begin", 450, 150);
+			g.setColor(Color.ORANGE);
+			g.drawString("Press P for Powerups or B for Barriers", 300, 300);
+			g.setColor(Color.ORANGE);
+			g.drawString("Press Space to Play Without Either", 325, 500);
+			powerup.setCount(0);
 		}
 		
 		//Draws All Objects
@@ -173,9 +196,15 @@ public class GamePanel extends JPanel implements Runnable
 		ball.draw(g);
 		score.draw(g);
 		score2.draw(g);
-		//Write that barriers are only drawn if user hits y key.
-		barrier.draw(g);
-		
+		//Write that barriers are only drawn if user hits b key.
+		if(barrierSpawn)
+		{
+			barrier.draw(g);
+		}
+		if(powerupSpawn && powerup.getCount() == 1500)
+		{
+			powerup.draw(g);
+		}
 		//Make a method that calls this at a certain time
 		
 		//Draws Ball Bounce
@@ -184,11 +213,11 @@ public class GamePanel extends JPanel implements Runnable
 		//Left Paddle Win Message
 		if(score.getScore() % 3 == 0 && score.getScore() != 0 && start)
 		{
-			g.setColor(Color.green);
+			g.setColor(Color.cyan);
 			g.setFont(new Font("serif", Font.BOLD, 30));
 			g.drawString("Left Paddle Wins!", 510, 300);
 			
-			g.setColor(Color.red);
+			g.setColor(Color.GREEN);
 			g.setFont(new Font("serif", Font.BOLD, 30));
 			g.drawString("Press Space to Keep Playing", 450, 500);
 			powerup.setCount(0);
@@ -197,11 +226,11 @@ public class GamePanel extends JPanel implements Runnable
 		//Right Paddle Win Message
 		if(score2.getScore() == 3 && score.getScore() != 0 && start)
 		{
-			g.setColor(Color.green);
+			g.setColor(Color.red);
 			g.setFont(new Font("serif", Font.BOLD, 30));
 			g.drawString("Right Paddle Wins!", 510, 300);
 			
-			g.setColor(Color.red);
+			g.setColor(Color.GREEN);
 			g.setFont(new Font("serif", Font.BOLD, 30));
 			g.drawString("Press Space to Keep Playing", 450, 500);
 			powerup.setCount(0);
@@ -213,12 +242,14 @@ public class GamePanel extends JPanel implements Runnable
 			score2.setScore(score2.getScore() + 1);
 			start = true;
 			ball.reset();
+			powerup.setCount(0);
 		}
 		if(ball.getX() > 1260)
 		{
 			score.setScore(score.getScore() + 1);
 			start = true;
 			ball.reset();
+			powerup.setCount(0);
 		}
 		Toolkit.getDefaultToolkit().sync();
 		
@@ -245,20 +276,23 @@ public class GamePanel extends JPanel implements Runnable
 		}
 		
 		//Makes Ball Bounce on Left Side Barrier
-		if(ball.getX() >= barrier.getX() && ball.getX() <= barrier.getX() + ball.getWidth()
-		   && ball.getY() > barrier.getY() && ball.getY() < barrier.getY() + barrier.getHeight()
-		   && ball.getVX() > 0)
+		if(barrierSpawn) 
 		{
-			ball.setX(barrier.getX() - ball.getWidth());
-			ball.bounce();
-		}
-		
-		if(ball.getX() <= barrier.getX() && ball.getX() >= barrier.getX() - ball.getWidth()
-		   && ball.getY() > barrier.getY() && ball.getY() < barrier.getY() + barrier.getHeight()
-		   && ball.getVX() < 0)
-		{
-			ball.setX(barrier.getX() + ball.getWidth());
-			ball.bounce();
+			if(ball.getX() >= barrier.getX() && ball.getX() <= barrier.getX() + ball.getWidth()
+					&& ball.getY() > barrier.getY() && ball.getY() < barrier.getY() + barrier.getHeight()
+					&& ball.getVX() > 0)
+			{
+				ball.setX(barrier.getX() - ball.getWidth());
+				ball.bounce();
+			}
+			//Makes Ball Bounce on Right Side Barrier
+			if(ball.getX() <= barrier.getX() && ball.getX() >= barrier.getX() - ball.getWidth()
+					&& ball.getY() > barrier.getY() && ball.getY() < barrier.getY() + barrier.getHeight()
+					&& ball.getVX() < 0)
+			{
+				ball.setX(barrier.getX() + ball.getWidth());
+				ball.bounce();
+			}
 		}
 		
 	}

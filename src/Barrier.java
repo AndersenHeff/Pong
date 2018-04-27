@@ -6,7 +6,7 @@ public class Barrier extends GameObject
 	public Barrier(int gWidth, int gHeight)
 	{
 		super(gWidth, gHeight);
-		c = Color.orange;
+		c = Color.GREEN;
 		width = 20;
 		height = 300;
 		x = gWidth/2 - 20;
