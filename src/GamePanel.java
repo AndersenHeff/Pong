@@ -14,7 +14,7 @@ import javax.swing.KeyStroke;
 //UPDATED
 public class GamePanel extends JPanel implements Runnable
 {
-	private static final long serialVersionUID = -7302468257756861299L;
+	private static final long serialVersionUID = 1L;
 	private Thread thread;
 	private Paddle paddle;
 	private Paddle paddle2;
@@ -24,7 +24,7 @@ public class GamePanel extends JPanel implements Runnable
 	private Powerup powerup;
 	private Barrier barrier;
 	private boolean start;
-	private boolean barrierSpawn, powerupSpawn;
+	private boolean barrierSpawn, powerupSpawn, winSpawn;
 	public GamePanel(int gWidth, int gHeight)
 	{
 		barrier = new Barrier(gWidth, gHeight);
@@ -38,6 +38,7 @@ public class GamePanel extends JPanel implements Runnable
 		start = true;
 		barrierSpawn = false;
 		powerupSpawn = false;
+		winSpawn = true;
 		thread = new Thread(this);
 		thread.start();
 	}
@@ -196,17 +197,15 @@ public class GamePanel extends JPanel implements Runnable
 		ball.draw(g);
 		score.draw(g);
 		score2.draw(g);
-		//Write that barriers are only drawn if user hits b key.
-		if(barrierSpawn)
+		//Barrier and Powerup Spawn
+		if(barrierSpawn && winSpawn)
 		{
 			barrier.draw(g);
 		}
-		if(powerupSpawn && powerup.getCount() == 1500)
+		if(powerupSpawn && powerup.getCount() == 1500 && winSpawn)
 		{
 			powerup.draw(g);
 		}
-		//Make a method that calls this at a certain time
-		
 		//Draws Ball Bounce
 		bounce();
 		
@@ -221,6 +220,7 @@ public class GamePanel extends JPanel implements Runnable
 			g.setFont(new Font("serif", Font.BOLD, 30));
 			g.drawString("Press Space to Keep Playing", 450, 500);
 			powerup.setCount(0);
+			winSpawn = false;
 		}
 		
 		//Right Paddle Win Message
@@ -234,6 +234,7 @@ public class GamePanel extends JPanel implements Runnable
 			g.setFont(new Font("serif", Font.BOLD, 30));
 			g.drawString("Press Space to Keep Playing", 450, 500);
 			powerup.setCount(0);
+			winSpawn = false;
 		}
 		
 		//Resets Ball After Win And Grants A Score
