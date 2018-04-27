@@ -2,7 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-//Update
+//UPDATED
 public class Ball extends GameObject implements Interface
 {
 	private int speed;
@@ -68,7 +68,6 @@ public class Ball extends GameObject implements Interface
 			vx = -1.25 * vx;
 		}
 	}
-	
 	
 	public double getVX()
 	{

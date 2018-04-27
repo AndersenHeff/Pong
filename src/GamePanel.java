@@ -11,7 +11,7 @@ import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
-//Update
+//UPDATED
 public class GamePanel extends JPanel implements Runnable
 {
 	private static final long serialVersionUID = -7302468257756861299L;
@@ -62,6 +62,7 @@ public class GamePanel extends JPanel implements Runnable
   		try {
   			//FPS
   			Thread.sleep(15);
+  			powerup.powerUpTimer();
   		} catch (InterruptedException e) { 
   			System.out.println("Thread stopped");
   			e.printStackTrace();
@@ -132,11 +133,13 @@ public class GamePanel extends JPanel implements Runnable
 				{
 					score.setScore(0);
 					score2.setScore(0);
+					powerup.setCount(0);
 				}
 				if(score2.getScore() == 3)
 				{
 					score2.setScore(0);
 					score.setScore(0);
+					powerup.setCount(0);
 				}
 			}
 		}
@@ -153,7 +156,7 @@ public class GamePanel extends JPanel implements Runnable
       }
        
 	public void paintComponent(Graphics g)
-	{	
+	{
 		super.paintComponent(g);
 		
 		//Start Message
@@ -174,8 +177,6 @@ public class GamePanel extends JPanel implements Runnable
 		barrier.draw(g);
 		
 		//Make a method that calls this at a certain time
-		//powerup.draw(g);
-		
 		
 		//Draws Ball Bounce
 		bounce();
@@ -190,6 +191,7 @@ public class GamePanel extends JPanel implements Runnable
 			g.setColor(Color.red);
 			g.setFont(new Font("serif", Font.BOLD, 30));
 			g.drawString("Press Space to Keep Playing", 450, 500);
+			powerup.setCount(0);
 		}
 		
 		//Right Paddle Win Message
@@ -202,6 +204,7 @@ public class GamePanel extends JPanel implements Runnable
 			g.setColor(Color.red);
 			g.setFont(new Font("serif", Font.BOLD, 30));
 			g.drawString("Press Space to Keep Playing", 450, 500);
+			powerup.setCount(0);
 		}
 		
 		//Resets Ball After Win And Grants A Score
@@ -238,6 +241,7 @@ public class GamePanel extends JPanel implements Runnable
 			ball.setX(paddle.getX() + paddle.getWidth());
 			ball.bounce();	
 			ball.setC(Color.red);
+
 		}
 		
 		//Makes Ball Bounce on Left Side Barrier

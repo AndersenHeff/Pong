@@ -1,9 +1,9 @@
 import java.awt.Color;
 import java.awt.Graphics;
-//Update
+//UPDATED
 public class Powerup extends GameObject
 {
-
+	private int count;
 	public Powerup(int gWidth, int gHeight) 
 	{
 		super(gWidth, gHeight);
@@ -19,7 +19,28 @@ public class Powerup extends GameObject
 		g.fillRect(x, y, width, height);
 	}
 	
-	
+	public void powerUpTimer()
+	{
+		count++;
+	}
 	//if x direction is right an ball x is greater than or equal to powerup x
 
+	
+	public int getCount()
+	{
+		return count;
+	}
+	
+	public void setCount(int count)
+	{
+		this.count = count;
+	}
+	
+	
+	public int getX()
+	{
+		return x;
+	}
+	
+	
 }

@@ -1,5 +1,5 @@
 import java.awt.Color;
-//Update
+//UPDATED
 public class GameObject 
 {
 	protected int x;

@@ -1,7 +1,7 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-//Update
+//UPDATED
 public class Score extends GameObject
 {
 	private int score;

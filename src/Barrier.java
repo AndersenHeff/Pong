@@ -1,6 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
-
+//UPDATED
 public class Barrier extends GameObject
 {
 	public Barrier(int gWidth, int gHeight)
