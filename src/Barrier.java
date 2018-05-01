@@ -1,20 +1,33 @@
 import java.awt.Color;
 import java.awt.Graphics;
 //UPDATED
-public class Barrier extends GameObject
+public class Barrier extends Paddle
 {
-	public Barrier(int gWidth, int gHeight)
+	public Barrier(int x, int y, Color c, int gWidth, int gHeight)
 	{
-		super(gWidth, gHeight);
-		c = Color.GREEN;
+		super(x,y,c,gWidth,gHeight);
 		width = 20;
 		height = 300;
-		x = gWidth/2 - 20;
-		y = 200;
+		this.x = x;
+		this.y = y;
+		this.c = c;
+		speed = 2;
 	}
 	public void draw(Graphics g) 
 	{
 		g.setColor(c);
 		g.fillRect(x, y, width, height);
+	}
+	public void move()
+	{
+		speed += y;
+		if(y >= 300)
+		{
+			speed -= y;
+		}
+		if(y <= 100)
+		{
+			speed += y;
+		}
 	}
 }

@@ -3,7 +3,7 @@ import java.awt.Graphics;
 //UPDATED
 public class Paddle extends GameObject implements Interface
 {
-	private int speed;
+	protected int speed;
 	private Direction dir;
 	public Paddle(int x, int y, Color c, int gWidth, int gHeight)
 	{

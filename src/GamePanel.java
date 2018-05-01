@@ -27,7 +27,7 @@ public class GamePanel extends JPanel implements Runnable
 	private boolean barrierSpawn, powerupSpawn, winSpawn;
 	public GamePanel(int gWidth, int gHeight)
 	{
-		barrier = new Barrier(gWidth, gHeight);
+		barrier = new Barrier(gWidth/2 - 20, 200, Color.GREEN, gWidth, gHeight);
 		powerup = new Powerup(gWidth, gHeight);
 		paddle = new Paddle(15, 310, Color.cyan, gWidth, gHeight);
 		paddle2 = new Paddle(gWidth - 30, 310, Color.red, gWidth, gHeight);
@@ -69,6 +69,7 @@ public class GamePanel extends JPanel implements Runnable
   		try {
   			//FPS
   			Thread.sleep(10);
+  			barrier.move();
   			powerup.powerUpTimer();
   		} catch (InterruptedException e) { 
   			System.out.println("Thread stopped");
@@ -275,7 +276,6 @@ public class GamePanel extends JPanel implements Runnable
 			ball.setC(Color.red);
 
 		}
-		
 		//Makes Ball Bounce on Left Side Barrier
 		if(barrierSpawn) 
 		{
