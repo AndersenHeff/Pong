@@ -11,12 +11,13 @@ public class Barrier extends Paddle
 		this.x = x;
 		this.y = y;
 		this.c = c;
-		speed = 2;
+		speed = 10;
 	}
 	public void draw(Graphics g) 
 	{
 		g.setColor(c);
 		g.fillRect(x, y, width, height);
+		move();
 	}
 	public void move()
 	{

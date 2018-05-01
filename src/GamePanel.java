@@ -46,40 +46,39 @@ public class GamePanel extends JPanel implements Runnable
 	@Override
 	public void run() 
 	{
-	  //paddle
-	  registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, false), "up", up);
-	  registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, true), "stop", stop);
-	  registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, false), "down", down);
-	  registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, true), "stop", stop);
-	  //paddle2
-	  registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, false), "up2", up2);
-	  registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, true), "stop2", stop2);
-	  registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, false), "down2", down2);
-	  registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, true), "stop2", stop2);
-	  
-	  //start game
-	  registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0, false), "fire", fire);
-	  
-	  //barrier and powerup
-	  registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_B, 0, false), "barrier", barrierS);
-	  registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_P, 0, false), "powerup", powerupS);
-	  
-	  while(true)
-  	{
-  		try {
-  			//FPS
-  			Thread.sleep(10);
-  			barrier.move();
-  			powerup.powerUpTimer();
-  		} catch (InterruptedException e) { 
-  			System.out.println("Thread stopped");
-  			e.printStackTrace();
-  			thread.interrupt();
-  			return;
-  		}
-  		repaint();
-  	}
-	  
+		//paddle
+		registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, false), "up", up);
+		registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, true), "stop", stop);
+		registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, false), "down", down);
+		registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, true), "stop", stop);
+		//paddle2
+		registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, false), "up2", up2);
+		registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, true), "stop2", stop2);
+		registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, false), "down2", down2);
+		registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, true), "stop2", stop2);
+
+		//start game
+		registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0, false), "fire", fire);
+
+		//barrier and powerup
+		registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_B, 0, false), "barrier", barrierS);
+		registerKeyBinding(KeyStroke.getKeyStroke(KeyEvent.VK_P, 0, false), "powerup", powerupS);
+
+		while(true)
+		{
+			try {
+				//FPS
+				Thread.sleep(10);
+				powerup.powerUpTimer();
+			} catch (InterruptedException e) { 
+				System.out.println("Thread stopped");
+				e.printStackTrace();
+				thread.interrupt();
+				return;
+			}
+			repaint();
+		}
+
 	}
 	//paddle1
 	private Action up = new AbstractAction("up") {
@@ -100,8 +99,8 @@ public class GamePanel extends JPanel implements Runnable
 			paddle.setDir(Direction.None);
 		}
 	};
-	
-	
+
+
 	//paddle2
 	private Action up2 = new AbstractAction("up2") {
 		@Override
@@ -134,8 +133,8 @@ public class GamePanel extends JPanel implements Runnable
 			powerupSpawn = true;
 		}
 	};
-	
-	
+
+
 	//Ball Fire Angle
 	private Action fire = new AbstractAction("fire") 
 	{
@@ -147,7 +146,7 @@ public class GamePanel extends JPanel implements Runnable
 			{
 				ball.fire(Math.random() * Math.PI / 2 + Math.PI / 4);
 				start = false;
-				
+
 				//Makes Score Reset On Win
 				if(score.getScore() == 3)
 				{
@@ -164,21 +163,21 @@ public class GamePanel extends JPanel implements Runnable
 			}
 		}
 	};
-	
-	
-	
-      private void registerKeyBinding(KeyStroke keyStroke, String name, Action action)
-      {
-          InputMap im = getInputMap(WHEN_IN_FOCUSED_WINDOW);
-          ActionMap am = getActionMap();
-          im.put(keyStroke, name);
-          am.put(name, action);
-      }
-       
+
+
+
+	private void registerKeyBinding(KeyStroke keyStroke, String name, Action action)
+	{
+		InputMap im = getInputMap(WHEN_IN_FOCUSED_WINDOW);
+		ActionMap am = getActionMap();
+		im.put(keyStroke, name);
+		am.put(name, action);
+	}
+
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-		
+
 		//Start Message
 		if(start && (score.getScore() % 3 != 0 || score.getScore() == 0) && !barrierSpawn && !powerupSpawn)
 		{
@@ -191,7 +190,10 @@ public class GamePanel extends JPanel implements Runnable
 			g.drawString("Press Space to Play Without Either", 325, 500);
 			powerup.setCount(0);
 		}
-		
+		if(!start && !winSpawn)
+		{
+			winSpawn = true;
+		}
 		//Draws All Objects
 		paddle.draw(g);
 		paddle2.draw(g);
@@ -209,35 +211,35 @@ public class GamePanel extends JPanel implements Runnable
 		}
 		//Draws Ball Bounce
 		bounce();
-		
+
 		//Left Paddle Win Message
 		if(score.getScore() % 3 == 0 && score.getScore() != 0 && start)
 		{
 			g.setColor(Color.cyan);
 			g.setFont(new Font("serif", Font.BOLD, 30));
 			g.drawString("Left Paddle Wins!", 510, 300);
-			
+
 			g.setColor(Color.GREEN);
 			g.setFont(new Font("serif", Font.BOLD, 30));
 			g.drawString("Press Space to Keep Playing", 450, 500);
 			powerup.setCount(0);
 			winSpawn = false;
 		}
-		
+
 		//Right Paddle Win Message
 		if(score2.getScore() == 3 && score.getScore() != 0 && start)
 		{
 			g.setColor(Color.red);
 			g.setFont(new Font("serif", Font.BOLD, 30));
 			g.drawString("Right Paddle Wins!", 510, 300);
-			
+
 			g.setColor(Color.GREEN);
 			g.setFont(new Font("serif", Font.BOLD, 30));
 			g.drawString("Press Space to Keep Playing", 450, 500);
 			powerup.setCount(0);
 			winSpawn = false;
 		}
-		
+
 		//Resets Ball After Win And Grants A Score
 		if(ball.getX() < 0)
 		{
@@ -254,14 +256,14 @@ public class GamePanel extends JPanel implements Runnable
 			powerup.setCount(0);
 		}
 		Toolkit.getDefaultToolkit().sync();
-		
+
 	}
 
 	public void bounce()
 	{
 		//Makes Ball Bounce on Right Paddle
 		if(ball.getX() >= paddle2.getX() - ball.getWidth() 
-		   && (ball.getY() > paddle2.getY() && ball.getY() < paddle2.getY() + paddle.getHeight())) 
+				&& (ball.getY() > paddle2.getY() && ball.getY() < paddle2.getY() + paddle.getHeight())) 
 		{
 			ball.setX(paddle2.getX() - ball.getWidth());
 			ball.bounce();
@@ -269,7 +271,7 @@ public class GamePanel extends JPanel implements Runnable
 		}
 		//Makes Ball Bounce on Left Paddle
 		if(ball.getX() <= paddle.getX() && (ball.getY() > paddle.getY() 
-			&& ball.getY() < paddle.getY() + paddle.getHeight())) 
+				&& ball.getY() < paddle.getY() + paddle.getHeight())) 
 		{
 			ball.setX(paddle.getX() + paddle.getWidth());
 			ball.bounce();	
@@ -280,8 +282,8 @@ public class GamePanel extends JPanel implements Runnable
 		if(barrierSpawn) 
 		{
 			if(ball.getX() >= barrier.getX() && ball.getX() <= barrier.getX() + ball.getWidth()
-					&& ball.getY() > barrier.getY() && ball.getY() < barrier.getY() + barrier.getHeight()
-					&& ball.getVX() > 0)
+			&& ball.getY() > barrier.getY() && ball.getY() < barrier.getY() + barrier.getHeight()
+			&& ball.getVX() > 0)
 			{
 				ball.setX(barrier.getX() - ball.getWidth());
 				ball.bounce();
@@ -294,9 +296,10 @@ public class GamePanel extends JPanel implements Runnable
 				ball.setX(barrier.getX() + ball.getWidth());
 				ball.bounce();
 			}
+
 		}
-		
+
 	}
 
-	
+
 }
