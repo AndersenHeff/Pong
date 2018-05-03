@@ -144,7 +144,7 @@ public class GamePanel extends JPanel implements Runnable
 			//Makes Ball Fire Only If Game Isn't Playing
 			if(start)
 			{
-				ball.fire(Math.random() * Math.PI / 2 + Math.PI / 4);
+				ball.fire(Math.random() * Math.PI / 2 + Math.PI / 3);
 				start = false;
 
 				//Makes Score Reset On Win
@@ -190,6 +190,7 @@ public class GamePanel extends JPanel implements Runnable
 			g.drawString("Press Space to Play Without Either", 325, 500);
 			powerup.setCount(0);
 		}
+		//Makes Barrier Erase on Win
 		if(!start && !winSpawn)
 		{
 			winSpawn = true;
@@ -289,9 +290,9 @@ public class GamePanel extends JPanel implements Runnable
 				ball.bounce();
 			}
 			//Makes Ball Bounce on Right Side Barrier
-			if(ball.getX() <= barrier.getX() && ball.getX() >= barrier.getX() - ball.getWidth()
-					&& ball.getY() > barrier.getY() && ball.getY() < barrier.getY() + barrier.getHeight()
-					&& ball.getVX() < 0)
+			else if(ball.getX() <= barrier.getX() && ball.getX() >= barrier.getX() - ball.getWidth()
+			&& ball.getY() > barrier.getY() && ball.getY() < barrier.getY() + barrier.getHeight()
+			&& ball.getVX() < 0)
 			{
 				ball.setX(barrier.getX() + ball.getWidth());
 				ball.bounce();

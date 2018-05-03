@@ -11,7 +11,7 @@ public class Barrier extends Paddle
 		this.x = x;
 		this.y = y;
 		this.c = c;
-		speed = 10;
+		speed = 1;
 	}
 	public void draw(Graphics g) 
 	{
@@ -21,14 +21,11 @@ public class Barrier extends Paddle
 	}
 	public void move()
 	{
-		speed += y;
-		if(y >= 300)
+		//Make barrier move back and forth
+		y += speed;
+		if(y == 400 || y == 0)
 		{
-			speed -= y;
-		}
-		if(y <= 100)
-		{
-			speed += y;
+			speed = -speed;
 		}
 	}
 }

@@ -1,6 +1,5 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 
 //UPDATED
 public class Ball extends GameObject implements Interface
