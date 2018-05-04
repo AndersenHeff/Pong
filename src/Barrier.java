@@ -13,6 +13,7 @@ public class Barrier extends Paddle
 		this.c = c;
 		speed = 1;
 	}
+	@Override
 	public void draw(Graphics g) 
 	{
 		g.setColor(c);

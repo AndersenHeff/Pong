@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Graphics;
 //UPDATED
 public class GameObject 
 {
@@ -12,7 +13,9 @@ public class GameObject
 		this.gWidth = gWidth;
 		this.gHeight = gHeight;
 	}
-	
+	public void draw(Graphics g)
+	{
+	}
 	public int getX()
 	{
 		return x;

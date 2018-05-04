@@ -13,6 +13,7 @@ public class Powerup extends GameObject
 		x = 620;
 		y = 0;
 	}
+	@Override
 	public void draw(Graphics g) 
 	{
 		g.setColor(c);

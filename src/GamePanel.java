@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -23,6 +24,7 @@ public class GamePanel extends JPanel implements Runnable
 	private Score score2;
 	private Powerup powerup;
 	private Barrier barrier;
+	private ArrayList<GameObject> parts;
 	private boolean start;
 	private boolean barrierSpawn, powerupSpawn, winSpawn;
 	public GamePanel(int gWidth, int gHeight)
@@ -41,6 +43,12 @@ public class GamePanel extends JPanel implements Runnable
 		winSpawn = true;
 		thread = new Thread(this);
 		thread.start();
+		parts = new ArrayList<GameObject>();
+		parts.add(paddle);
+		parts.add(paddle2);
+		parts.add(ball);
+		parts.add(score);
+		parts.add(score2);
 	}
 
 	@Override
@@ -196,11 +204,14 @@ public class GamePanel extends JPanel implements Runnable
 			winSpawn = true;
 		}
 		//Draws All Objects
-		paddle.draw(g);
-		paddle2.draw(g);
-		ball.draw(g);
-		score.draw(g);
-		score2.draw(g);
+		for(GameObject part : parts)
+		{
+			part.draw(g);
+			if(part instanceof Interface)
+			{
+				((Interface) part).move();
+			}
+		}
 		//Barrier and Powerup Spawn
 		if(barrierSpawn && winSpawn)
 		{

@@ -12,6 +12,7 @@ public class Score extends GameObject
 		this.y = y;
 		score = 0;
 	}
+	@Override
 	public void draw(Graphics g)
 	{
 		g.setColor(Color.white);

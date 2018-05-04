@@ -46,7 +46,6 @@ public class Ball extends GameObject implements Interface
 	{
 		g.setColor(c);
 		g.fillOval(x, y, width, height);
-		move();
 	}
 	
 	

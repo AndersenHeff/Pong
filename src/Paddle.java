@@ -47,7 +47,6 @@ public class Paddle extends GameObject implements Interface
 	{
 		g.setColor(c);
 		g.fillRect(x, y, width, height);
-		move();
 	}
 	
 }
