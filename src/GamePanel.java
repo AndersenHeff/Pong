@@ -152,7 +152,7 @@ public class GamePanel extends JPanel implements Runnable
 			//Makes Ball Fire Only If Game Isn't Playing
 			if(start)
 			{
-				ball.fire(Math.random() * Math.PI / 2 + Math.PI / 3);
+				ball.fire(Math.random() * Math.PI / 2 + Math.PI / 4);
 				start = false;
 
 				//Makes Score Reset On Win
