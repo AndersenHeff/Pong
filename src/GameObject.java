@@ -32,6 +32,10 @@ public class GameObject
 	{
 		return height;
 	}
+	public Color getC()
+	{
+		return c;
+	}
 	public void setX(int x)
 	{
 		this.x = x;
@@ -48,7 +52,10 @@ public class GameObject
 	{
 		this.height = height;
 	}
-	
+	public void setC(Color c)
+	{
+		this.c = c;
+	}
 	
 	
 	

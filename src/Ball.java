@@ -32,6 +32,7 @@ public class Ball extends GameObject implements Interface
 		}
 	}
 	
+	@Override
 	public void reset()
 	{
 		vx = 0;
@@ -80,9 +81,5 @@ public class Ball extends GameObject implements Interface
 	public void setVX(double vx)
 	{
 		this.vx = vx;
-	}
-	public void setC(Color c)
-	{
-		this.c = c;
 	}
 }

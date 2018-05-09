@@ -37,11 +37,4 @@ public class Powerup extends GameObject
 		this.count = count;
 	}
 	
-	
-	public int getX()
-	{
-		return x;
-	}
-	
-	
 }

@@ -203,6 +203,11 @@ public class GamePanel extends JPanel implements Runnable
 		{
 			winSpawn = true;
 		}
+		
+		
+		
+		
+		
 		//Draws All Objects
 		for(GameObject part : parts)
 		{
@@ -212,6 +217,9 @@ public class GamePanel extends JPanel implements Runnable
 				((Interface) part).move();
 			}
 		}
+		
+		
+		
 		//Barrier and Powerup Spawn
 		if(barrierSpawn && winSpawn)
 		{
@@ -252,13 +260,15 @@ public class GamePanel extends JPanel implements Runnable
 			winSpawn = false;
 		}
 
-		//Resets Ball After Win And Grants A Score
+		//Resets Ball After Goal And Grants A Score
 		if(ball.getX() < 0)
 		{
 			score2.setScore(score2.getScore() + 1);
 			start = true;
 			ball.reset();
 			powerup.setCount(0);
+		    paddle.reset();
+		    paddle2.reset();
 		}
 		if(ball.getX() > 1260)
 		{
@@ -266,6 +276,8 @@ public class GamePanel extends JPanel implements Runnable
 			start = true;
 			ball.reset();
 			powerup.setCount(0);
+			paddle.reset();
+			paddle2.reset();
 		}
 		Toolkit.getDefaultToolkit().sync();
 
