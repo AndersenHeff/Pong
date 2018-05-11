@@ -56,8 +56,8 @@ public class Ball extends GameObject implements Interface
 		vy = -(int)(Math.sin(angle + 30) * speed);
 	}
 	
-	public void bounce()
-	{	
+	public void barrierBounce()
+	{
 		if(vx >= 9 || vx <= -9)
 		{
 			vx = -vx;
@@ -66,6 +66,23 @@ public class Ball extends GameObject implements Interface
 		{
 			vx = -1.25 * vx;
 		}
+	}
+	public void leftBounce(Paddle paddle)
+	{	
+		double relY = y + height / 2 - paddle.getY();
+		double angle = ((-2 * Math.PI / 3) * relY / paddle.getHeight() 
+				+ 11 * Math.PI / 12);
+		x = paddle.getX() + paddle.getWidth();
+		fire(angle);
+	}
+	
+	public void rightBounce(Paddle paddle2)
+	{
+		double relY = y + height - paddle2.getY();
+		//fix angle
+		double angle = ((-2 * Math.PI / 4) * relY / paddle2.getHeight() + 3 * Math.PI / 2);
+		x = paddle2.getX() - width;
+		fire(angle);
 	}
 	
 	public double getVX()

@@ -164,8 +164,8 @@ public class GamePanel extends JPanel implements Runnable
 				}
 				if(score2.getScore() == 3)
 				{
-					score2.setScore(0);
 					score.setScore(0);
+					score2.setScore(0);
 					powerup.setCount(0);
 				}
 			}
@@ -187,7 +187,9 @@ public class GamePanel extends JPanel implements Runnable
 		super.paintComponent(g);
 
 		//Start Message
-		if(start && (score.getScore() % 3 != 0 || score.getScore() == 0) && !barrierSpawn && !powerupSpawn)
+		if(start && (score.getScore() % 3 != 0 || score.getScore() == 0) 
+				&& (score2.getScore() % 3 != 0 || score2.getScore() == 0)
+				&& !barrierSpawn && !powerupSpawn)
 		{
 			g.setColor(Color.green);
 			g.setFont(new Font("serif", Font.BOLD, 30));
@@ -233,7 +235,7 @@ public class GamePanel extends JPanel implements Runnable
 		bounce();
 
 		//Left Paddle Win Message
-		if(score.getScore() % 3 == 0 && score.getScore() != 0 && start)
+		if(score.getScore() == 3 && score.getScore() != 0 && start)
 		{
 			g.setColor(Color.cyan);
 			g.setFont(new Font("serif", Font.BOLD, 30));
@@ -247,7 +249,7 @@ public class GamePanel extends JPanel implements Runnable
 		}
 
 		//Right Paddle Win Message
-		if(score2.getScore() == 3 && score.getScore() != 0 && start)
+		if(score2.getScore() == 3 && score2.getScore() != 0 && start)
 		{
 			g.setColor(Color.red);
 			g.setFont(new Font("serif", Font.BOLD, 30));
@@ -290,7 +292,7 @@ public class GamePanel extends JPanel implements Runnable
 				&& (ball.getY() > paddle2.getY() && ball.getY() < paddle2.getY() + paddle.getHeight())) 
 		{
 			ball.setX(paddle2.getX() - ball.getWidth());
-			ball.bounce();
+			ball.rightBounce(paddle2);
 			ball.setC(Color.cyan);
 		}
 		//Makes Ball Bounce on Left Paddle
@@ -298,7 +300,7 @@ public class GamePanel extends JPanel implements Runnable
 				&& ball.getY() < paddle.getY() + paddle.getHeight())) 
 		{
 			ball.setX(paddle.getX() + paddle.getWidth());
-			ball.bounce();	
+			ball.leftBounce(paddle);	
 			ball.setC(Color.red);
 
 		}
@@ -310,7 +312,7 @@ public class GamePanel extends JPanel implements Runnable
 			&& ball.getVX() > 0)
 			{
 				ball.setX(barrier.getX() - ball.getWidth());
-				ball.bounce();
+				ball.barrierBounce();
 			}
 			//Makes Ball Bounce on Right Side Barrier
 			else if(ball.getX() <= barrier.getX() && ball.getX() >= barrier.getX() - ball.getWidth()
@@ -318,7 +320,7 @@ public class GamePanel extends JPanel implements Runnable
 			&& ball.getVX() < 0)
 			{
 				ball.setX(barrier.getX() + ball.getWidth());
-				ball.bounce();
+				ball.barrierBounce();
 			}
 
 		}
